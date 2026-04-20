@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { sendNewsletterNotification } from "@/lib/email";
 
 // POST /api/newsletter — subscribe to newsletter
 export async function POST(request: NextRequest) {
@@ -23,6 +24,13 @@ export async function POST(request: NextRequest) {
   }
 
   await prisma.newsletter.create({ data: { email } });
+
+  // Notify admin about new subscriber
+  try {
+    await sendNewsletterNotification(email);
+  } catch (error) {
+    console.error("Newsletter notification error:", error);
+  }
 
   return NextResponse.json({ message: "Subscribed successfully" }, { status: 201 });
 }

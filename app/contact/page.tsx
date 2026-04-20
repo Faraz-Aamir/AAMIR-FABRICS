@@ -5,10 +5,45 @@ import PageHeader from "@/components/PageHeader";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Something went wrong.");
+        setLoading(false);
+        return;
+      }
+
+      setSubmitted(true);
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch {
+      setError("Failed to send message. Please try again.");
+    }
+    setLoading(false);
   };
 
   return (
@@ -29,22 +64,29 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-body text-gray-500 tracking-wider uppercase mb-2">Name *</label>
-                    <input type="text" required className="w-full border border-gray-200 px-4 py-3 font-body text-sm focus:border-accent focus:outline-none" />
+                    <input type="text" name="name" value={formData.name} onChange={handleChange} required className="w-full border border-gray-200 px-4 py-3 font-body text-sm focus:border-accent focus:outline-none" />
                   </div>
                   <div>
                     <label className="block text-xs font-body text-gray-500 tracking-wider uppercase mb-2">Email *</label>
-                    <input type="email" required className="w-full border border-gray-200 px-4 py-3 font-body text-sm focus:border-accent focus:outline-none" />
+                    <input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full border border-gray-200 px-4 py-3 font-body text-sm focus:border-accent focus:outline-none" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-xs font-body text-gray-500 tracking-wider uppercase mb-2">Subject</label>
-                  <input type="text" className="w-full border border-gray-200 px-4 py-3 font-body text-sm focus:border-accent focus:outline-none" />
+                  <input type="text" name="subject" value={formData.subject} onChange={handleChange} className="w-full border border-gray-200 px-4 py-3 font-body text-sm focus:border-accent focus:outline-none" />
                 </div>
                 <div>
                   <label className="block text-xs font-body text-gray-500 tracking-wider uppercase mb-2">Message *</label>
-                  <textarea required rows={5} className="w-full border border-gray-200 px-4 py-3 font-body text-sm focus:border-accent focus:outline-none resize-none" />
+                  <textarea name="message" value={formData.message} onChange={handleChange} required rows={5} className="w-full border border-gray-200 px-4 py-3 font-body text-sm focus:border-accent focus:outline-none resize-none" />
                 </div>
-                <button type="submit" className="bg-accent text-white px-8 py-3 font-body text-sm tracking-[0.15em] uppercase hover:bg-accent/90 transition-colors">Send Message</button>
+
+                {error && (
+                  <p className="text-red-500 text-sm font-body">{error}</p>
+                )}
+
+                <button type="submit" disabled={loading} className="bg-accent text-white px-8 py-3 font-body text-sm tracking-[0.15em] uppercase hover:bg-accent/90 transition-colors disabled:opacity-50">
+                  {loading ? "Sending..." : "Send Message"}
+                </button>
               </form>
             )}
           </div>
