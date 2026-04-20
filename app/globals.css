@@ -1,0 +1,194 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ========================================
+   BASE STYLES
+   ======================================== */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #F5F5F5;
+    color: #111111;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: #C8A96A;
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #F5F5F5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #C8A96A;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #B08D4A;
+  }
+}
+
+/* ========================================
+   COMPONENT STYLES
+   ======================================== */
+@layer components {
+  /* Gold button */
+  .btn-gold {
+    @apply bg-accent text-white font-body font-medium px-8 py-3 tracking-wider uppercase text-sm
+           transition-all duration-300 ease-in-out
+           hover:bg-accent-dark hover:shadow-lg hover:shadow-accent/30
+           active:scale-95;
+  }
+
+  .btn-gold-outline {
+    @apply border-2 border-accent text-accent font-body font-medium px-8 py-3 tracking-wider uppercase text-sm
+           transition-all duration-300 ease-in-out bg-transparent
+           hover:bg-accent hover:text-white hover:shadow-lg hover:shadow-accent/30
+           active:scale-95;
+  }
+
+  /* Section heading */
+  .section-heading {
+    @apply font-heading text-4xl md:text-5xl font-bold text-primary text-center;
+  }
+
+  .section-subheading {
+    @apply font-body text-sm md:text-base text-gray-500 text-center tracking-widest uppercase mt-3;
+  }
+
+  /* Gold separator */
+  .gold-separator {
+    @apply w-20 h-[2px] bg-accent mx-auto mt-4 mb-8;
+  }
+
+  /* Product card */
+  .product-card {
+    @apply bg-white cursor-pointer overflow-hidden transition-all duration-500;
+  }
+
+  .product-card:hover {
+    @apply shadow-2xl shadow-black/10;
+  }
+
+  .product-card .product-image-wrapper {
+    @apply relative overflow-hidden;
+  }
+
+  .product-card .product-image-wrapper img {
+    @apply transition-transform duration-700 ease-out;
+  }
+
+  .product-card:hover .product-image-wrapper img {
+    @apply scale-110;
+  }
+
+  /* Navbar link */
+  .nav-link {
+    @apply relative font-body text-sm tracking-wider uppercase transition-colors duration-300;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-[2px] bg-accent transition-all duration-300;
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+}
+
+/* ========================================
+   SWIPER CUSTOM STYLES
+   ======================================== */
+.hero-swiper .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.5) !important;
+  width: 12px !important;
+  height: 12px !important;
+  opacity: 1 !important;
+  transition: all 0.3s ease !important;
+}
+
+.hero-swiper .swiper-pagination-bullet-active {
+  background: #C8A96A !important;
+  width: 35px !important;
+  border-radius: 6px !important;
+}
+
+.hero-swiper .swiper-button-next,
+.hero-swiper .swiper-button-prev {
+  color: #C8A96A !important;
+  background: rgba(0, 0, 0, 0.3);
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50%;
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+}
+
+.hero-swiper .swiper-button-next:hover,
+.hero-swiper .swiper-button-prev:hover {
+  background: rgba(200, 169, 106, 0.9);
+  color: #fff !important;
+}
+
+.hero-swiper .swiper-button-next::after,
+.hero-swiper .swiper-button-prev::after {
+  font-size: 18px !important;
+  font-weight: bold;
+}
+
+/* Best sellers swiper */
+.bestseller-swiper .swiper-button-next,
+.bestseller-swiper .swiper-button-prev {
+  color: #C8A96A !important;
+  background: #fff;
+  width: 45px !important;
+  height: 45px !important;
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.bestseller-swiper .swiper-button-next:hover,
+.bestseller-swiper .swiper-button-prev:hover {
+  background: #C8A96A;
+  color: #fff !important;
+}
+
+.bestseller-swiper .swiper-button-next::after,
+.bestseller-swiper .swiper-button-prev::after {
+  font-size: 16px !important;
+  font-weight: bold;
+}
+
+/* ========================================
+   UTILITY ANIMATIONS
+   ======================================== */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}

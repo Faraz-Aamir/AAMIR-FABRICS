@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("CUSTOMER") // ADMIN, STAFF, CUSTOMER
+  phone     String?
+  address   String?
+  city      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+}
+
+model Product {
+  id              String      @id @default(cuid())
+  slug            String      @unique
+  name            String
+  brand           String
+  category        String      // MEN, WOMEN, KIDS
+  fabricType      String      // Lawn, Cotton, Velvet, Chiffon, Khaddar, Organza, Wash & Wear, Silk, Jacquard, Embroidered
+  price           Float
+  originalPrice   Float?
+  discountPrice   Float?
+  discountPercent Float?
+  discountExpiry  DateTime?
+  description     String
+  images          String      // JSON array of image URLs
+  sizes           String      // JSON array: ["S","M","L","XL"]
+  colors          String      // JSON array: ["Red","Blue"]
+  stockQuantity   Int         @default(10)
+  isOutOfStock    Boolean     @default(false)
+  restockDate     String?
+  isFeatured      Boolean     @default(false)
+  isNewArrival    Boolean     @default(false)
+  isBestSeller    Boolean     @default(false)
+  isArchived      Boolean     @default(false)
+  tags            String?     // JSON array: ["trending","limited","sale"]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  orderItems      OrderItem[]
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])
+  items           OrderItem[]
+  total           Float
+  status          String      @default("PENDING") // PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED
+  paymentStatus   String      @default("PENDING_PAYMENT") // PENDING_PAYMENT, PAID, REJECTED
+  transactionId   String?
+  shippingName    String
+  shippingEmail   String
+  shippingPhone   String
+  shippingAddress String
+  shippingCity    String
+  paymentMethod   String      @default("COD")
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+  size      String?
+  color     String?
+}
+
+model Newsletter {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
