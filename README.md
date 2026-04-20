@@ -1,40 +1,69 @@
-<<<<<<< HEAD
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aamir Fabrics
 
-## Getting Started
+Welcome to **Aamir Fabrics**, a modern e-commerce web application built to showcase high-quality fabrics, offering a beautiful, responsive, and seamless shopping experience.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Modern UI/UX**: Built with custom aesthetic guidelines using Tailwind CSS and Framer Motion for smooth animations and transitions.
+- **E-Commerce Functionality**: Browse products with an intuitive interface, styled carousels (Swiper), and a fully responsive layout.
+- **Authentication**: Secure user authentication implemented seamlessly with NextAuth.js.
+- **Database**: Prisma ORM with SQLite handles local development data operations perfectly.
+- **Optimized Performance**: Leverages Next.js App Router for server-side rendering and high performance.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Technologies Used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: [Next.js 14](https://nextjs.org/)
+- **Frontend**: React 18, Tailwind CSS, Framer Motion, Swiper
+- **Backend & DB**: Prisma ORM, SQLite
+- **Security**: NextAuth.js, bcryptjs
+- **Language**: TypeScript
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Getting Started
 
-## Learn More
+Follow these instructions to set up the project locally on your machine.
 
-To learn more about Next.js, take a look at the following resources:
+### Prerequisites
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Node.js](https://nodejs.org/en/) (v18 or higher recommended)
+- npm, yarn, pnpm or bun
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Installation
 
-## Deploy on Vercel
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd aamir-fabrics
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-=======
-# AAMIR-FABRICS
->>>>>>> b4ef0cc3074b8e8f0e53dae70e136d2382d317b9
+3. **Set up environment variables:**
+   Copy the example environment file to `.env` and fill in the necessary values.
+   ```bash
+   cp .env.example .env
+   ```
+   *Make sure `NEXTAUTH_SECRET` is set to a secure string. `DATABASE_URL` is configured to `file:./dev.db` by default.*
+
+4. **Initialize the database:**
+   Synchronize Prisma schema with the SQLite database.
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+
+5. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+
+6. Open [http://localhost:3000](http://localhost:3000) in your browser to view the application locally.
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome. Feel free to check out the repository and push your improvements.
+
+---
+*Developed with Next.js, created by the Faraz Aamir.*
