@@ -7,7 +7,7 @@ import CartSidebar from "@/components/CartSidebar";
 import SearchPanel from "@/components/SearchPanel";
 import AuthPanel from "@/components/AuthPanel";
 import { ToastProvider } from "@/components/ToastProvider";
-import WhatsAppButton from "@/components/WhatsAppButton";
+
 
 export const metadata: Metadata = {
   title: "Aamir Fabrics | Premium Unstitched Fabrics",
@@ -34,7 +34,7 @@ export default function RootLayout({
             <AuthPanel />
             <main>{children}</main>
             <Footer />
-            <WhatsAppButton />
+
           </ToastProvider>
         </Providers>
       </body>
