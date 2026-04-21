@@ -102,26 +102,28 @@ export default function Hero() {
       {/* ==========================================
           LARGE WATERMARK TEXT - fills the background
           ========================================== */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={`watermark-${activeIndex}`}
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -50 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="absolute top-1/2 right-0 -translate-y-1/2 z-[5] pointer-events-none select-none hidden lg:block"
-        >
-          <span
-            className="font-heading text-[18rem] xl:text-[22rem] font-bold tracking-tight leading-none"
-            style={{
-              WebkitTextStroke: "1.5px rgba(200, 169, 106, 0.15)",
-              WebkitTextFillColor: "transparent",
-            }}
+      <div className="absolute inset-0 overflow-hidden z-[5] pointer-events-none">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`watermark-${activeIndex}`}
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="absolute top-1/2 right-0 -translate-y-1/2 select-none hidden lg:block"
           >
-            {slides[activeIndex].watermark}
-          </span>
-        </motion.div>
-      </AnimatePresence>
+            <span
+              className="font-heading text-[18rem] xl:text-[22rem] font-bold tracking-tight leading-none"
+              style={{
+                WebkitTextStroke: "1.5px rgba(200, 169, 106, 0.15)",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              {slides[activeIndex].watermark}
+            </span>
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
       {/* ==========================================
           DECORATIVE CORNER FRAME

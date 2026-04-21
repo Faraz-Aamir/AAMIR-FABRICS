@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="bg-secondary text-primary font-body antialiased">
+      <body className="bg-secondary text-primary font-body antialiased overflow-x-hidden w-full">
         <Providers>
           <ToastProvider>
             <Navbar />
