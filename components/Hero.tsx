@@ -63,7 +63,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="hero" className="relative h-screen w-full overflow-hidden">
+    <section id="hero" className="relative w-full overflow-hidden" style={{ height: '100svh', minHeight: '560px' }}>
       <Swiper
         modules={[Autoplay, Pagination, EffectFade]}
         effect="fade"
@@ -84,11 +84,15 @@ export default function Hero() {
                   src={slide.image}
                   alt={slide.title}
                   fill
-                  className={`object-cover transition-transform duration-[8000ms] ease-out ${
+                  className={`object-cover object-top transition-transform duration-[8000ms] ease-out ${
                     activeIndex === index ? "scale-105" : "scale-100"
                   }`}
                   priority={index === 0}
+                  sizes="100vw"
+                  quality={85}
                 />
+                {/* Dark gradient overlay — makes text always readable on any image */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-transparent" />
               </div>
             </div>
           </SwiperSlide>
@@ -137,11 +141,11 @@ export default function Hero() {
           MAIN CONTENT OVERLAY
           ========================================== */}
       <div className="absolute inset-0 z-10 pointer-events-none">
-        <div className="h-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex items-center">
+        <div className="h-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex items-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeIndex}
-              className="max-w-xl lg:max-w-2xl pointer-events-auto"
+              className="max-w-[85vw] sm:max-w-xl lg:max-w-2xl pointer-events-auto"
               initial="hidden"
               animate="visible"
               exit="exit"
@@ -199,8 +203,7 @@ export default function Hero() {
                   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } },
                   exit: { opacity: 0, y: -20, transition: { duration: 0.3 } },
                 }}
-                className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-primary leading-[1.1] mb-4 whitespace-pre-line tracking-tight"
-                style={{ textShadow: "0 2px 20px rgba(255,255,255,0.8), 0 1px 5px rgba(255,255,255,0.6)" }}
+                className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-3 sm:mb-4 whitespace-pre-line tracking-tight drop-shadow-lg"
               >
                 {slides[activeIndex].title}
               </motion.h1>
@@ -212,8 +215,7 @@ export default function Hero() {
                   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
                   exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
                 }}
-                className="font-body text-gray-600 text-sm sm:text-base tracking-wide mb-4 max-w-md"
-                style={{ textShadow: "0 1px 10px rgba(255,255,255,0.5)" }}
+                className="font-body text-white/80 text-xs sm:text-base tracking-wide mb-3 sm:mb-4 max-w-xs sm:max-w-md"
               >
                 {slides[activeIndex].description}
               </motion.p>
@@ -225,8 +227,7 @@ export default function Hero() {
                   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
                   exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
                 }}
-                className="font-body text-accent-dark text-sm sm:text-base font-semibold tracking-wide mb-6"
-                style={{ textShadow: "0 1px 10px rgba(255,255,255,0.5)" }}
+                className="font-body text-accent text-sm sm:text-base font-semibold tracking-wide mb-6"
               >
                 {slides[activeIndex].price}
               </motion.p>
@@ -238,15 +239,15 @@ export default function Hero() {
                   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
                   exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
                 }}
-                className="flex items-center gap-4 flex-wrap mb-8"
+                className="flex items-center gap-3 flex-wrap mb-6 sm:mb-8"
               >
                 <Link
                   href={slides[activeIndex].href}
-                  className="group inline-flex items-center gap-3 bg-accent text-white font-body text-xs sm:text-sm tracking-[0.25em] uppercase px-8 sm:px-10 py-4 hover:bg-accent-dark transition-all duration-500 hover:shadow-xl hover:shadow-accent/25"
+                  className="group inline-flex items-center gap-2 sm:gap-3 bg-accent text-white font-body text-[11px] sm:text-sm tracking-[0.2em] uppercase px-6 sm:px-10 py-3 sm:py-4 hover:bg-accent-dark transition-all duration-500 hover:shadow-xl hover:shadow-accent/25"
                 >
                   {slides[activeIndex].cta}
                   <svg
-                    className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5"
+                    className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1.5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -255,12 +256,12 @@ export default function Hero() {
                   </svg>
                 </Link>
                 <Link
-                  href="/products"
-                  className="group inline-flex items-center gap-2 border-2 border-primary/30 text-primary font-body text-xs sm:text-sm tracking-[0.2em] uppercase px-6 sm:px-8 py-[14px] hover:border-accent hover:text-accent transition-all duration-500 backdrop-blur-sm bg-white/20"
+                  href="/women"
+                  className="group inline-flex items-center gap-2 border-2 border-white/50 text-white font-body text-[11px] sm:text-sm tracking-[0.2em] uppercase px-5 sm:px-8 py-[11px] sm:py-[14px] hover:border-accent hover:text-accent transition-all duration-500 backdrop-blur-sm bg-white/10"
                 >
                   View All
                   <svg
-                    className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                    className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -282,7 +283,7 @@ export default function Hero() {
                 {features.map((feature, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <span className="text-accent text-[10px]">{feature.icon}</span>
-                    <span className="font-body text-[10px] sm:text-xs text-gray-500 tracking-wider uppercase">
+                    <span className="font-body text-[10px] sm:text-xs text-white/60 tracking-wider uppercase">
                       {feature.text}
                     </span>
                   </div>
@@ -361,30 +362,30 @@ export default function Hero() {
           BOTTOM BAR - Pagination + Arrows
           ========================================== */}
       {/* Custom Pagination - Bottom Left */}
-      <div className="absolute bottom-8 left-6 sm:left-8 lg:left-12 z-20 flex items-center gap-6">
+      <div className="absolute bottom-5 sm:bottom-8 left-5 sm:left-8 lg:left-12 z-20 flex items-center gap-4 sm:gap-6">
         <div className="hero-custom-pagination flex items-center gap-2" />
-        <span className="font-body text-xs text-gray-500 tracking-widest">
+        <span className="font-body text-[10px] sm:text-xs text-gray-500 tracking-widest">
           {String(activeIndex + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
         </span>
       </div>
 
       {/* Navigation Arrows - Bottom Right */}
-      <div className="absolute bottom-8 right-6 sm:right-8 lg:right-12 z-20 flex items-center gap-3">
+      <div className="absolute bottom-5 sm:bottom-8 right-5 sm:right-8 lg:right-12 z-20 flex items-center gap-2 sm:gap-3">
         <button
           onClick={() => swiperInstance?.slidePrev()}
-          className="w-12 h-12 border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-accent hover:border-accent hover:text-white transition-all duration-300 backdrop-blur-sm bg-white/10"
+          className="w-9 h-9 sm:w-12 sm:h-12 border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-accent hover:border-accent hover:text-white transition-all duration-300 backdrop-blur-sm bg-white/10"
           aria-label="Previous slide"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
         <button
           onClick={() => swiperInstance?.slideNext()}
-          className="w-12 h-12 border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-accent hover:border-accent hover:text-white transition-all duration-300 backdrop-blur-sm bg-white/10"
+          className="w-9 h-9 sm:w-12 sm:h-12 border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-accent hover:border-accent hover:text-white transition-all duration-300 backdrop-blur-sm bg-white/10"
           aria-label="Next slide"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
           </svg>
         </button>

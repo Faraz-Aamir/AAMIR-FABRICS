@@ -8,7 +8,8 @@ const footerLinks = {
     { name: "Men", href: "/men" },
     { name: "Women", href: "/women" },
     { name: "Kids", href: "/kids" },
-    { name: "All Products", href: "/products" },
+    { name: "New Arrivals", href: "/products?newArrivals=true" },
+    { name: "Sale", href: "/sale" },
   ],
   "Customer Service": [
     { name: "Contact Us", href: "/contact" },

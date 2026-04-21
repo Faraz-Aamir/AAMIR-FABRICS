@@ -74,8 +74,8 @@ export default function AdminOrdersPage() {
     <div className="min-h-screen bg-gray-50">
       <AdminHeader />
 
-      <div className="p-6 max-w-7xl mx-auto">
-        <h2 className="font-heading text-2xl mb-6">Orders ({orders.length})</h2>
+      <div className="p-4 sm:p-6 max-w-7xl mx-auto">
+        <h2 className="font-heading text-xl sm:text-2xl mb-5 sm:mb-6">Orders ({orders.length})</h2>
 
         <div className="bg-white border border-gray-100 overflow-hidden">
           <div className="overflow-x-auto">

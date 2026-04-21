@@ -145,15 +145,15 @@ export default function AdminProductsPage() {
     <div className="min-h-screen bg-gray-50">
       <AdminHeader />
 
-      <div className="p-6 max-w-7xl mx-auto">
+      <div className="p-4 sm:p-6 max-w-7xl mx-auto">
         {/* Top Bar */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
-          <h2 className="font-heading text-2xl">Products ({filtered.length})</h2>
-          <div className="flex items-center gap-3 w-full md:w-auto">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-5 sm:mb-6">
+          <h2 className="font-heading text-xl sm:text-2xl">Products ({filtered.length})</h2>
+          <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
             <input type="text" placeholder="Search products..." value={search} onChange={e => setSearch(e.target.value)}
-              className="flex-1 md:w-64 border border-gray-200 px-4 py-2 text-sm font-body focus:border-accent focus:outline-none" />
-            <button onClick={openAdd} className="bg-accent text-white px-5 py-2 text-sm font-body tracking-wider uppercase hover:bg-accent/90 transition-colors whitespace-nowrap">
-              + Add Product
+              className="flex-1 sm:w-64 border border-gray-200 px-3 py-2 text-sm font-body focus:border-accent focus:outline-none" />
+            <button onClick={openAdd} className="bg-accent text-white px-4 sm:px-5 py-2 text-sm font-body tracking-wider uppercase hover:bg-accent/90 transition-colors whitespace-nowrap">
+              + Add
             </button>
           </div>
         </div>

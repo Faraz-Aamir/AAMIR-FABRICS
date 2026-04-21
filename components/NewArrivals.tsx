@@ -123,8 +123,8 @@ export default function NewArrivals() {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <Link href="/products" className="btn-gold-outline inline-block">
-            View All Products
+          <Link href="/products?newArrivals=true" className="btn-gold-outline inline-block">
+            View All New Arrivals
           </Link>
         </motion.div>
       </div>

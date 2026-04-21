@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
@@ -12,6 +12,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [accountDropdown, setAccountDropdown] = useState(false);
+  const accountDropdownRef = useRef<HTMLDivElement>(null);
   const { data: session } = useSession();
   const { totalItems, setIsCartOpen } = useCart();
   const { setIsSearchOpen, setIsAuthOpen, setAuthTab } = useUI();
@@ -27,6 +28,23 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close account dropdown when clicking/tapping outside (works on mobile)
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent | TouchEvent) => {
+      if (accountDropdownRef.current && !accountDropdownRef.current.contains(e.target as Node)) {
+        setAccountDropdown(false);
+      }
+    };
+    if (accountDropdown) {
+      document.addEventListener("mousedown", handleOutsideClick);
+      document.addEventListener("touchstart", handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("touchstart", handleOutsideClick);
+    };
+  }, [accountDropdown]);
+
   if (isAdminPage) return null;
 
   const navLinks = [
@@ -34,7 +52,7 @@ export default function Navbar() {
     { name: "Women", href: "/women" },
     { name: "Kids", href: "/kids" },
     { name: "New Arrivals", href: "/products?newArrivals=true" },
-    { name: "Sale", href: "/products?sort=price-asc" },
+    { name: "Sale", href: "/sale" },
   ];
 
   const isTransparent = isHomePage && !scrolled;
@@ -48,7 +66,7 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-14 md:h-20">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
             <h1 className="font-heading text-xl md:text-2xl text-white tracking-wide">
@@ -61,23 +79,28 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={`font-body text-xs tracking-[0.2em] uppercase transition-colors duration-300 ${
-                  pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href.split('?')[0]))
-                    ? "text-accent"
-                    : "text-white hover:text-accent"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const hrefPath = link.href.split('?')[0];
+              const hrefQuery = link.href.includes('?') ? link.href.split('?')[1] : null;
+              const isActive = hrefQuery
+                ? pathname === hrefPath && typeof window !== 'undefined' && window.location.search.includes(hrefQuery.split('=')[1])
+                : (pathname === link.href || (link.href !== '/' && pathname.startsWith(hrefPath)));
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={`font-body text-xs tracking-[0.2em] uppercase transition-colors duration-300 ${
+                    isActive ? "text-accent" : "text-white hover:text-accent"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Icons */}
-          <div className="flex items-center space-x-5">
+          <div className="flex items-center space-x-3 sm:space-x-5">
             {/* Search */}
             <button
               onClick={() => setIsSearchOpen(true)}
@@ -90,7 +113,7 @@ export default function Navbar() {
             </button>
 
             {/* Account */}
-            <div className="relative">
+            <div className="relative" ref={accountDropdownRef}>
               {session ? (
                 <>
                   <button
@@ -108,33 +131,32 @@ export default function Navbar() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
-                        className="absolute right-0 top-full mt-2 w-48 bg-white shadow-xl border border-gray-100 py-2 z-50"
-                        onMouseLeave={() => setAccountDropdown(false)}
+                        className="absolute right-0 top-full mt-2 w-52 bg-white shadow-xl border border-gray-100 py-2 z-50"
                       >
                         <p className="px-4 py-2 text-xs text-gray-400 font-body border-b border-gray-50">
                           Hi, {session.user?.name}
                         </p>
-                        <Link href="/account" className="block px-4 py-2 text-sm font-body text-gray-700 hover:text-accent hover:bg-gray-50 transition-colors" onClick={() => setAccountDropdown(false)}>
+                        <Link href="/account" className="block px-4 py-3 text-sm font-body text-gray-700 hover:text-accent hover:bg-gray-50 transition-colors" onClick={() => setAccountDropdown(false)}>
                           Dashboard
                         </Link>
-                        <Link href="/account/orders" className="block px-4 py-2 text-sm font-body text-gray-700 hover:text-accent hover:bg-gray-50 transition-colors" onClick={() => setAccountDropdown(false)}>
+                        <Link href="/account/orders" className="block px-4 py-3 text-sm font-body text-gray-700 hover:text-accent hover:bg-gray-50 transition-colors" onClick={() => setAccountDropdown(false)}>
                           My Orders
                         </Link>
-                        <Link href="/wishlist" className="block px-4 py-2 text-sm font-body text-gray-700 hover:text-accent hover:bg-gray-50 transition-colors" onClick={() => setAccountDropdown(false)}>
+                        <Link href="/wishlist" className="block px-4 py-3 text-sm font-body text-gray-700 hover:text-accent hover:bg-gray-50 transition-colors" onClick={() => setAccountDropdown(false)}>
                           Wishlist
                         </Link>
-                        <Link href="/account/settings" className="block px-4 py-2 text-sm font-body text-gray-700 hover:text-accent hover:bg-gray-50 transition-colors" onClick={() => setAccountDropdown(false)}>
+                        <Link href="/account/settings" className="block px-4 py-3 text-sm font-body text-gray-700 hover:text-accent hover:bg-gray-50 transition-colors" onClick={() => setAccountDropdown(false)}>
                           Settings
                         </Link>
                         {session.user?.role === "ADMIN" && (
-                          <Link href="/admin" className="block px-4 py-2 text-sm font-body text-accent hover:bg-accent/5 transition-colors" onClick={() => setAccountDropdown(false)}>
+                          <Link href="/admin" className="block px-4 py-3 text-sm font-body text-accent hover:bg-accent/5 transition-colors" onClick={() => setAccountDropdown(false)}>
                             Admin Panel
                           </Link>
                         )}
                         <hr className="my-1 border-gray-50" />
                         <button
                           onClick={() => { signOut(); setAccountDropdown(false); }}
-                          className="block w-full text-left px-4 py-2 text-sm font-body text-red-500 hover:bg-red-50 transition-colors"
+                          className="block w-full text-left px-4 py-3 text-sm font-body text-red-500 hover:bg-red-50 transition-colors"
                         >
                           Sign Out
                         </button>
@@ -173,8 +195,8 @@ export default function Navbar() {
 
             {/* Mobile Menu Toggle */}
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden text-white hover:text-accent transition-all duration-300"
+              onClick={() => { setMobileMenuOpen(!mobileMenuOpen); setAccountDropdown(false); }}
+              className="md:hidden text-white hover:text-accent transition-all duration-300 p-1"
               aria-label="Menu"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -209,13 +231,6 @@ export default function Navbar() {
                   {link.name}
                 </Link>
               ))}
-              <Link
-                href="/products"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block font-body text-sm tracking-[0.15em] uppercase text-gray-300 hover:text-accent transition-colors py-2"
-              >
-                All Products
-              </Link>
             </div>
           </motion.div>
         )}

@@ -41,6 +41,14 @@ export default function CollectionPage({ category, title, subtitle, bgImage }: C
   const [sort, setSort] = useState("newest");
   const [filtersOpen, setFiltersOpen] = useState(false);
 
+  // Detect special modes from URL
+  const isNewArrivals = searchParams.get("newArrivals") === "true";
+  const isSale = searchParams.get("sale") === "true";
+
+  // Dynamic title/subtitle based on URL params
+  const displayTitle = isNewArrivals ? "New Arrivals" : isSale ? "Sale" : title;
+  const displaySubtitle = isNewArrivals ? "Fresh From The Latest Collections" : isSale ? "Exclusive Discounts & Deals" : subtitle;
+
   // Read fabric type from URL params (from FabricCollections links)
   useEffect(() => {
     const fabric = searchParams.get("fabric");
@@ -59,8 +67,8 @@ export default function CollectionPage({ category, title, subtitle, bgImage }: C
     if (sort) params.set("sort", sort);
     params.set("limit", "24");
 
-    const newArrivals = searchParams.get("newArrivals");
-    if (newArrivals) params.set("newArrivals", "true");
+    if (isNewArrivals) params.set("newArrivals", "true");
+    if (isSale) params.set("onSale", "true");
 
     try {
       const res = await fetch(`/api/products?${params.toString()}`);
@@ -71,7 +79,7 @@ export default function CollectionPage({ category, title, subtitle, bgImage }: C
       setProducts([]);
     }
     setLoading(false);
-  }, [category, selectedBrands, selectedFabricTypes, showInStock, sort, searchParams]);
+  }, [category, selectedBrands, selectedFabricTypes, showInStock, sort, isNewArrivals, isSale]);
 
   useEffect(() => { fetchProducts(); }, [fetchProducts]);
 
@@ -93,11 +101,11 @@ export default function CollectionPage({ category, title, subtitle, bgImage }: C
 
   return (
     <div>
-      <PageHeader title={title} subtitle={subtitle} bgImage={bgImage} />
+      <PageHeader title={displayTitle} subtitle={displaySubtitle} bgImage={bgImage} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6">
-          <Breadcrumb items={category === "ALL" ? [{ label: "All Products" }] : [{ label: title }]} />
+          <Breadcrumb items={[{ label: displayTitle }]} />
         </div>
 
         {/* Top bar */}

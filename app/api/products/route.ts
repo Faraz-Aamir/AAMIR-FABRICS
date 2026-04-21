@@ -17,6 +17,7 @@ export async function GET(request: NextRequest) {
   const newArrivals = searchParams.get("newArrivals");
   const bestSellers = searchParams.get("bestSellers");
   const inStock = searchParams.get("inStock");
+  const onSale = searchParams.get("onSale");
   const sort = searchParams.get("sort") || "newest";
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "12");
@@ -34,6 +35,7 @@ export async function GET(request: NextRequest) {
   if (newArrivals === "true") where.isNewArrival = true;
   if (bestSellers === "true") where.isBestSeller = true;
   if (inStock === "true") where.isOutOfStock = false;
+  if (onSale === "true") where.discountPrice = { not: null }; // Only products with a discount
   if (search) {
     // SQLite LIKE is case-insensitive for ASCII by default, so `contains` works.
     // We also lowercase the search term for extra safety.

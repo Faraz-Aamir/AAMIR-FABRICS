@@ -55,9 +55,9 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-gray-50">
       <AdminHeader />
 
-      <div className="p-6 max-w-7xl mx-auto">
+      <div className="p-4 sm:p-6 max-w-7xl mx-auto">
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3 sm:gap-4 mb-6 sm:mb-8">
           {[
             { label: "Products", value: stats.products, color: "text-blue-600", bg: "bg-blue-50" },
             { label: "Total Orders", value: stats.orders, color: "text-green-600", bg: "bg-green-50" },
@@ -75,18 +75,19 @@ export default function AdminDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
           {[
+            { label: "Dashboard", desc: "View stats & summary", href: "/admin", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
             { title: "Manage Products", desc: "Add, edit, or remove products", href: "/admin/products", icon: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" },
             { title: "Manage Orders", desc: "View and update statuses", href: "/admin/orders", icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" },
             { title: "Customers", desc: "View customer list", href: "/admin/customers", icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" },
             { title: "View Store", desc: "See the live storefront", href: "/", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
           ].map((item) => (
-            <Link key={item.title} href={item.href} className="bg-white border border-gray-100 p-5 hover:border-accent transition-colors flex items-center space-x-4">
-              <div className="w-10 h-10 bg-accent/10 flex items-center justify-center flex-shrink-0">
-                <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={item.icon} /></svg>
+            <Link key={item.title || item.label} href={item.href} className="bg-white border border-gray-100 p-4 sm:p-5 hover:border-accent transition-colors flex items-center space-x-3 sm:space-x-4">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-accent/10 flex items-center justify-center flex-shrink-0">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={item.icon} /></svg>
               </div>
-              <div><h3 className="font-body text-sm font-medium">{item.title}</h3><p className="font-body text-xs text-gray-400">{item.desc}</p></div>
+              <div className="min-w-0"><h3 className="font-body text-sm font-medium truncate">{item.title || item.label}</h3><p className="font-body text-xs text-gray-400 truncate">{item.desc}</p></div>
             </Link>
           ))}
         </div>
