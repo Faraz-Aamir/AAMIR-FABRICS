@@ -1,82 +1,47 @@
-# 🌟 Aamir Fabrics – Premium E-Commerce Solutions
+<div align="center">
 
-Aamir Fabrics is a high-performance, full-stack e-commerce application tailored for the premium textile industry. Built with the Next.js 14 App Router, it provides a seamless, type-safe, and aesthetically pleasing shopping experience.
+# 🧵 Aamir Fabrics
 
-[**Explore Live Demo**](#) | [**Report Bug**](#)
+**Premium Unstitched Fabrics — E-Commerce Platform**
+
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Site-4f46e5?style=for-the-badge)](https://aamirfabrics-nine.vercel.app/)
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![Vercel](https://img.shields.io/badge/Deployed-Vercel-000?style=for-the-badge&logo=vercel)](https://vercel.com/)
+
+</div>
 
 ---
 
-## 🚀 Key Features
-
-*   **Modern Architecture:** Utilizes Next.js 14 Server Components for optimal SEO and blazing-fast initial load times.
-*   **Intuitive UX/UI:** Designed with a focus on "Old Money" aesthetics, featuring glassmorphism and smooth animations powered by Framer Motion.
-*   **Secure Authentication:** Comprehensive user session management via NextAuth.js, supporting secure credential-based login.
-*   **Advanced Data Modeling:** Robust schema management with Prisma ORM, optimized for both SQLite (local) and PostgreSQL (production).
-*   **Responsive Design:** Fully fluid layouts optimized for mobile, tablet, and desktop viewports using Tailwind CSS.
+A full-stack e-commerce store for premium Pakistani unstitched fabrics. Features a clean storefront, admin dashboard, cart system, and order management — built with modern web technologies.
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-| :--- | :--- |
-| **Framework** | Next.js 14 (App Router) |
-| **Language** | TypeScript |
-| **Styling** | Tailwind CSS & Framer Motion |
-| **Database** | Prisma ORM (PostgreSQL / SQLite) |
-| **Auth** | NextAuth.js |
-| **Deployment** | Vercel |
+`Next.js 14` · `TypeScript` · `Tailwind CSS` · `Prisma ORM` · `Supabase (PostgreSQL)` · `NextAuth.js` · `Vercel`
 
-## 💻 Getting Started
+## ⚡ Quick Start
 
-### Prerequisites
+```bash
+git clone https://github.com/Faraz-Aamir/AAMIR-FABRICS.git
+cd AAMIR-FABRICS
+npm install
+cp .env.example .env   # fill in your env variables
+npx prisma generate && npx prisma db push
+npm run dev
+```
 
-*   **Node.js**: v18.17.0 or later
-*   **Package Manager**: npm / yarn / pnpm
+Open [http://localhost:3000](http://localhost:3000)
 
-### Installation
+## 🔑 Environment Variables
 
-1.  **Clone the Repository:**
-    ```bash
-    git clone https://github.com/Faraz-Aamir/AAMIR-FABRICS.git
-    cd AAMIR-FABRICS
-    ```
-
-2.  **Install Dependencies:**
-    ```bash
-    npm install
-    ```
-
-3.  **Environment Configuration:**
-    Create a `.env` file in the root directory based on `.env.example`:
-    ```bash
-    cp .env.example .env
-    ```
-
-4.  **Database Migration:**
-    Generate the Prisma client and push the schema to your local database:
-    ```bash
-    npx prisma generate
-    npx prisma db push
-    ```
-
-5.  **Run Development Server:**
-    ```bash
-    npm run dev
-    ```
-    Access the application at [http://localhost:3000](http://localhost:3000).
-
-## 🤝 Contribution
-
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
-
-1.  Fork the Project
-2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4.  Push to the Branch (`git push origin feature/AmazingFeature`)
-5.  Open a Pull Request
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
+| Variable | Description |
+|---|---|
+| `DATABASE_URL` | Supabase PostgreSQL connection string |
+| `NEXTAUTH_SECRET` | Random secret for NextAuth |
+| `ADMIN_EMAIL` | Admin login email |
+| `ADMIN_PASSWORD` | Admin login password |
 
 ---
-*Developed with ❤️ by Faraz Aamir*
+
+<div align="center">
+Made with ❤️ by <strong>Faraz Aamir</strong> &nbsp;·&nbsp; <a href="https://aamirfabrics-nine.vercel.app/">Live Site</a>
+</div>
